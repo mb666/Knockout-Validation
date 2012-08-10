@@ -198,6 +198,14 @@
                             objValues = val;
                         } else if (utils.isObject(val)) {
                             objValues = utils.values(val);
+                        } else {
++                            // iterate through properties of obj. look for nested properties that are validatable observables
++                            for (var i in obj) {
++                                var prop = obj[i];
++                                if (ko.isObservable(prop) && !!prop.isValid) {
++                                    objValues.push(prop);
++                                }
++                            }
                         }
                     }
 
